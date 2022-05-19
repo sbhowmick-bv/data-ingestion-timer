@@ -1,0 +1,36 @@
+#Server configuration.
+server:
+  applicationConnectors:
+    - type: http
+      port: 8095
+  adminConnectors:
+    - type: http
+      port: 8096
+
+logging:
+  level: INFO
+  loggers:
+    com.bazaarvoice.adaptor: INFO
+
+database:
+  driverClass: com.mysql.cj.jdbc.Driver
+  # the username
+  user: root
+  # the password
+  password: someswar
+  # the JDBC URL; the database is called notifications-report
+  url: jdbc:mysql://127.0.0.1:3306/notifications-report
+  # the SQL query to run when validating a connection's liveness
+  validationQuery: "/* ReportService Health Check */ SELECT 1"
+  properties:
+    hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
+    hibernate.show_sql: false
+    hibernate.generate_statistics: false
+    hibernate.hbm2ddl.auto: validate # validates schema when service is started
+    hibernate.current_session_context_class: thread
+
+reportingParameterConfiguration:
+  s3BucketName : "notification-ppen-processed-qa-eu"  #Testing : "ppen-processed-feed-test"
+  awsRegion : "eu-west-1"
+  feedType : "import_feed"
+  environment : "QA"
